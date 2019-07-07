@@ -25,7 +25,7 @@ const App = () => {
       {/* user provides their own array from props  */}
       {array.map((item, index) => {
         return (
-          <Item key={item} leftToRight={true} margin={index * 10} time={index}>
+          <Item key={item} fromRight={true} translate={index * 10} time={index}>
             {item}
           </Item>
         );
@@ -36,10 +36,10 @@ const App = () => {
 
 const move = (cssProperty, pixelValue) => keyframes`
     0% {
-        ${cssProperty} : ${pixelValue}px;
+        ${cssProperty} : translateX(${pixelValue}px);
     }
     100% {
-        ${cssProperty} : 0px;
+        ${cssProperty} :  translateX(0px);
     }
 `;
 
@@ -50,10 +50,9 @@ const Item = styled.div`
   color: white;
   margin: 10px auto;
   ${props =>
-    props.leftToRight &&
+    props.fromRight &&
     css`
-      margin-left: 0px;
-      animation: ${move("margin-left", props.margin)} 0.2s linear;
+      animation: ${move("transform", props.translate)} 0.5s linear;
     `};
 `;
 
