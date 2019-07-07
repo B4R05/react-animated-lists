@@ -36,10 +36,10 @@ const App = () => {
 
 const move = (cssProperty, pixelValue) => keyframes`
     0% {
-        ${cssProperty} : 0px;
+        ${cssProperty} : ${pixelValue}px;
     }
     100% {
-        ${cssProperty} : ${pixelValue}px;
+        ${cssProperty} : 0px;
     }
 `;
 
@@ -52,7 +52,7 @@ const Item = styled.div`
   ${props =>
     props.leftToRight &&
     css`
-      margin-left: ${props.margin}px;
+      margin-left: 0px;
       animation: ${move("margin-left", props.margin)} 0.2s linear;
     `};
 `;
