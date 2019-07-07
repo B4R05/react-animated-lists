@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { range } from "lodash";
+import styled from "styled-components";
 
-function App() {
+const array = range(1, 10);
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      {array.map((item, index) => {
+        return (
+          <Item margin={index * 10} transition={index}>
+            {item}
+          </Item>
+        );
+      })}
+    </Container>
   );
-}
+};
+
+const Item = styled.div`
+  height: 50px;
+  width: 100px;
+  background: black;
+  color: white;
+  margin: 10px auto;
+  margin-left: ${props => props.margin}px;
+  transition: 2s ease-out;
+`;
+
+const Container = styled.div`
+  text-align: center;
+  width: 100%;
+`;
 
 export default App;
