@@ -25,7 +25,12 @@ const App = () => {
       {/* user provides their own array from props  */}
       {array.map((item, index) => {
         return (
-          <Item key={item} fromRight={true} translate={index * 10} time={index}>
+          <Item
+            key={item}
+            fromRight={true}
+            translate={index * 10}
+            time={`0.${index}`}
+          >
             {item}
           </Item>
         );
@@ -38,11 +43,13 @@ const move = (cssProperty, pixelValue) => keyframes`
     0% {
         ${cssProperty} : translateX(${pixelValue}px);
     }
+
     100% {
         ${cssProperty} :  translateX(0px);
     }
 `;
 
+//transform translateX should go to zero
 const Item = styled.div`
   height: 50px;
   width: 100px;
@@ -52,7 +59,9 @@ const Item = styled.div`
   ${props =>
     props.fromRight &&
     css`
-      animation: ${move("transform", props.translate)} 0.5s linear;
+      transform: translateX(${props.translate}px);
+      animation: ${move("transform", props.translate)} 0.4s ${props.time}s
+        forwards;
     `};
 `;
 
