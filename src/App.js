@@ -27,9 +27,10 @@ const App = () => {
         return (
           <Item
             key={item}
-            fromRight={true}
+            toBottom={true}
             translate={index * 10}
-            time={`0.${index}`}
+            delay={`0.${index}`}
+            duration={0.4}
           >
             {item}
           </Item>
@@ -39,13 +40,23 @@ const App = () => {
   );
 };
 
-const move = (cssProperty, pixelValue) => keyframes`
+const moveHorizontal = (cssProperty, pixelValue) => keyframes`
     0% {
         ${cssProperty} : translateX(${pixelValue}px);
     }
 
     100% {
         ${cssProperty} :  translateX(0px);
+    }
+`;
+
+const moveVertical = (cssProperty, pixelValue) => keyframes`
+    0% {
+        ${cssProperty} : translateY(${pixelValue}px);
+    }
+
+    100% {
+        ${cssProperty} :  translateY(0px);
     }
 `;
 
@@ -57,11 +68,40 @@ const Item = styled.div`
   color: white;
   margin: 10px auto;
   ${props =>
-    props.fromRight &&
+    props.toLeft &&
     css`
       transform: translateX(${props.translate}px);
-      animation: ${move("transform", props.translate)} 0.4s ${props.time}s
-        forwards;
+      animation-name: ${moveHorizontal("transform", props.translate)};
+      animation-duration: ${props.duration}s;
+      animation-fill-mode: forwards;
+      animation-delay: ${props.delay}s;
+    `};
+  ${props =>
+    props.toRight &&
+    css`
+      transform: translateX(-${props.translate}px);
+      animation-name: ${moveHorizontal("transform", -props.translate)};
+      animation-duration: ${props.duration}s;
+      animation-fill-mode: forwards;
+      animation-delay: ${props.delay}s;
+    `};
+  ${props =>
+    props.toBottom &&
+    css`
+      transform: translateY(-${props.translate}px);
+      animation-name: ${moveVertical("transform", -props.translate)};
+      animation-duration: ${props.duration}s;
+      animation-fill-mode: forwards;
+      animation-delay: ${props.delay}s;
+    `};
+  ${props =>
+    props.toTop &&
+    css`
+      transform: translateY(${props.translate}px);
+      animation-name: ${moveVertical("transform", props.translate)};
+      animation-duration: ${props.duration}s;
+      animation-fill-mode: forwards;
+      animation-delay: ${props.delay}s;
     `};
 `;
 
