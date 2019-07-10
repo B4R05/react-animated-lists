@@ -27,7 +27,8 @@ const App = () => {
         return (
           <Item
             key={item}
-            toBottom={true}
+            toTop
+            blurIn
             translate={index * 10}
             delay={`0.${index}`}
             duration={0.4}
@@ -40,68 +41,66 @@ const App = () => {
   );
 };
 
-const moveHorizontal = (cssProperty, pixelValue) => keyframes`
+const animateItem = (
+  toLeft,
+  toRight,
+  toTop,
+  toBottom,
+  translate,
+  fadeIn,
+  blurIn
+) => keyframes`
     0% {
-        ${cssProperty} : translateX(${pixelValue}px);
+        ${toLeft && `transform : translateX(${translate}px);`}
+        ${toRight && `transform : translateX(-${translate}px);`}
+        ${toTop && `transform : translateY(${translate}px);`}
+        ${toBottom && `transform : translateY(-${translate}px);`}
+        ${fadeIn && `opacity: 0;`}
+        ${blurIn && `filter: blur(10px);`}
     }
 
     100% {
-        ${cssProperty} :  translateX(0px);
+        ${toLeft && `translateX(0px);`}
+        ${toRight && `translateX(0px);`}
+        ${toTop && `translateY(0px);`}
+        ${toBottom && `translateY(0px);`}
+        ${fadeIn && `opacity: 1;`}
+        ${blurIn && `filter: blur(0px);`}
     }
 `;
 
-const moveVertical = (cssProperty, pixelValue) => keyframes`
-    0% {
-        ${cssProperty} : translateY(${pixelValue}px);
-    }
-
-    100% {
-        ${cssProperty} :  translateY(0px);
-    }
-`;
-
-//transform translateX should go to zero
+// add juggle effect https://www.cardsagainsthumanity.com/lab/
 const Item = styled.div`
+  border-radius: 3px;
   height: 50px;
   width: 100px;
   background: black;
   color: white;
   margin: 10px auto;
-  ${props =>
-    props.toLeft &&
+  ${({
+    toLeft,
+    toRight,
+    toTop,
+    toBottom,
+    translate,
+    fadeIn,
+    blurIn,
+    duration,
+    delay
+  }) =>
     css`
-      transform: translateX(${props.translate}px);
-      animation-name: ${moveHorizontal("transform", props.translate)};
-      animation-duration: ${props.duration}s;
-      animation-fill-mode: forwards;
-      animation-delay: ${props.delay}s;
-    `};
-  ${props =>
-    props.toRight &&
-    css`
-      transform: translateX(-${props.translate}px);
-      animation-name: ${moveHorizontal("transform", -props.translate)};
-      animation-duration: ${props.duration}s;
-      animation-fill-mode: forwards;
-      animation-delay: ${props.delay}s;
-    `};
-  ${props =>
-    props.toBottom &&
-    css`
-      transform: translateY(-${props.translate}px);
-      animation-name: ${moveVertical("transform", -props.translate)};
-      animation-duration: ${props.duration}s;
-      animation-fill-mode: forwards;
-      animation-delay: ${props.delay}s;
-    `};
-  ${props =>
-    props.toTop &&
-    css`
-      transform: translateY(${props.translate}px);
-      animation-name: ${moveVertical("transform", props.translate)};
-      animation-duration: ${props.duration}s;
-      animation-fill-mode: forwards;
-      animation-delay: ${props.delay}s;
+      animation-name: ${animateItem(
+        toLeft,
+        toRight,
+        toTop,
+        toBottom,
+        translate,
+        fadeIn,
+        blurIn
+      )};
+      animation-duration: ${duration}s;
+      animation-fill-mode: both;
+      animation-delay: ${delay}s;
     `};
 `;
 
