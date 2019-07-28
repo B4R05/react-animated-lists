@@ -22,9 +22,10 @@ const Child = styled.div`
   background: black;
   color: white;
   margin: 10px auto;
+  margin-left: 10px;
+  transition: 0.5s;
 
   &:hover {
-    transition: 0.5s;
     transform: scale(1.2);
   }
 `;

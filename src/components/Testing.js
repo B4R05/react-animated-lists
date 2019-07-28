@@ -38,7 +38,7 @@ const Testing = () => {
           <ReactAnimatedList
             toLeft
             fadeIn
-            blurIn
+            easingFunction="cubic-bezier(0.68, -0.55, 0.265, 1.95)"
             key={index}
             translate={index}
             delay={index}
