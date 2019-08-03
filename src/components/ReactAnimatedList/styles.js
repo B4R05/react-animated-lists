@@ -2,9 +2,6 @@ import styled, { keyframes, css } from "styled-components";
 
 //TODO:
 
-//scaleIn
-//scaleDown intro iphone style
-
 //final testing cases
 //test with react router, clicking on card leads to a page
 
@@ -33,11 +30,9 @@ const animateItem = ({
   translate,
   fadeIn,
   blurIn,
-  blurValue,
-  scaleIn
+  blurValue
 }) => keyframes`
     0% {
-      ${scaleIn && `transform: scale(0.5);`}
         ${toLeft && `transform : translateX(${translate}px);`}
         ${toRight && `transform : translateX(-${translate}px);`}
         ${toTop && `transform : translateY(${translate}px);`}
@@ -47,7 +42,6 @@ const animateItem = ({
     }
 
     100% {
-        ${scaleIn && `transform: scale(1);`}
         ${toLeft && `translateX(${DEFAULT_END_TRANSLATE}px);`}
         ${toRight && `translateX(${DEFAULT_END_TRANSLATE}px);`}
         ${toTop && `translateY(${DEFAULT_END_TRANSLATE}px);`}
