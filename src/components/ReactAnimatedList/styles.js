@@ -1,21 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
 
-//TODO:
-
-//final testing cases
-//test with react router, clicking on card leads to a page
-
-//wrtie documentation
-//live interactive examples
-//README
-//separate page for demos
-
-//make it a light library, just the bare essentials needed to work
-//remove from create-react-App
-//publish to npm
-
-//contact react blogs to spread the word
-
 const DEFAULT_START_BLUR = 10;
 const DEFAULT_START_OPACITY = 0;
 const DEFAULT_END_OPACITY = 1;
@@ -51,7 +35,6 @@ const animateItem = ({
     }
 `;
 
-// add juggle effect https://www.cardsagainsthumanity.com/lab/
 const AnimatedItem = styled.div`
   ${props =>
     css`
