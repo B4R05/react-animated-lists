@@ -140,7 +140,7 @@ class Testing extends React.Component {
     return (
       <>
         <GithubCorner
-          href="https://github.com/username/repo"
+          href="https://github.com/GavBaros/react-animated-lists"
           bannerColor="#F0DB4F"
           octoColor="#272c34"
         />
