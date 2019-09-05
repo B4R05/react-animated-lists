@@ -18,6 +18,7 @@ const Child = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   background: black;
+  cursor: pointer;
   color: white;
   margin: 25px auto;
   margin-left: 10px;

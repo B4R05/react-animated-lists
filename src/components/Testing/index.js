@@ -55,6 +55,7 @@ const objArray = [
 class Testing extends React.Component {
   state = {
     direction: "toLeft",
+    introFX: "fadeIn",
     clicked: false,
     value: 5
   };
@@ -67,6 +68,72 @@ class Testing extends React.Component {
 
   handleRange = e => {
     this.setState({ value: e.target.value });
+  };
+
+  handleIntroFX = dir => {
+    this.setState({ introFX: dir });
+  };
+
+  renderDirectionName = () =>
+    this.state.direction === "toLeft"
+      ? "left"
+      : this.state.direction === "toRight"
+        ? "right"
+        : this.state.direction === "toTop"
+          ? "top"
+          : this.state.direction === "toBottom"
+            ? "bottom"
+            : "";
+
+  renderText = () => {
+    if (this.state.introFX === "bounceIn") {
+      return (
+        <Text>
+          The value of the <code>easingFunction</code> prop is <br />
+          <code>cubic-bezier(0.68, -0.55, 0.265, 1.95)</code> to the{" "}
+          {this.renderDirectionName()}
+        </Text>
+      );
+    }
+
+    if (this.state.introFX === "blurInFadeInBounceIn") {
+      return (
+        <Text>
+          Both the <code>fadeIn</code> and <code>blurIn</code> props are{" "}
+          <code>true</code> and the value of the <code>easingFunction</code>{" "}
+          prop is <br />
+          <code>cubic-bezier(0.68, -0.55, 0.265, 1.95)</code> to the{" "}
+          {this.renderDirectionName()}
+        </Text>
+      );
+    }
+
+    if (this.state.introFX === "fadeIn") {
+      return (
+        <Text>
+          The <code>fadeIn</code> prop is <code>true</code> to the{" "}
+          {this.renderDirectionName()}!
+        </Text>
+      );
+    }
+
+    if (this.state.introFX === "blurIn") {
+      return (
+        <Text>
+          The <code>blurIn</code> prop is <code>true</code> to the{" "}
+          {this.renderDirectionName()}!
+        </Text>
+      );
+    }
+
+    if (this.state.introFX === "blurInFadeIn") {
+      return (
+        <Text>
+          Both the <code>fadeIn</code> and <code>blurIn</code> props are{" "}
+          <code>true</code> to the {this.renderDirectionName()}!
+        </Text>
+      );
+    }
   };
 
   render() {
@@ -128,11 +195,39 @@ class Testing extends React.Component {
             </NavItem>
           </NavSection>
           <NavSection>
-            <NavItem>FADE IN</NavItem>
-            <NavItem>BLUR IN</NavItem>
-            <NavItem>BOUNCE IN</NavItem>
+            <NavItem
+              isActive={this.state.introFX === "fadeIn"}
+              onClick={() => this.handleIntroFX("fadeIn")}
+            >
+              FADE IN
+            </NavItem>
+            <NavItem
+              isActive={this.state.introFX === "blurIn"}
+              onClick={() => this.handleIntroFX("blurIn")}
+            >
+              BLUR IN
+            </NavItem>
+            <NavItem
+              isActive={this.state.introFX === "blurInFadeIn"}
+              onClick={() => this.handleIntroFX("blurInFadeIn")}
+            >
+              BLUR & FADE!
+            </NavItem>
+            <NavItem
+              isActive={this.state.introFX === "bounceIn"}
+              onClick={() => this.handleIntroFX("bounceIn")}
+            >
+              BOUNCE
+            </NavItem>
+            <NavItem
+              isActive={this.state.introFX === "blurInFadeInBounceIn"}
+              onClick={() => this.handleIntroFX("blurInFadeInBounceIn")}
+            >
+              BLUR & FADE & BOUNCE!
+            </NavItem>
           </NavSection>
         </NavBar>
+        {this.renderText()}
         <UserContainer>
           {/* user provides their own array as normal  */}
           <AnimatedItemsContainer>
@@ -143,8 +238,22 @@ class Testing extends React.Component {
                   toRight={this.state.direction === "toRight" && true}
                   toTop={this.state.direction === "toTop" && true}
                   toBottom={this.state.direction === "toBottom" && true}
-                  fadeIn
-                  easingFunction="cubic-bezier(0.68, -0.55, 0.265, 1.95)"
+                  fadeIn={
+                    this.state.introFX === "fadeIn" ||
+                    this.state.introFX === "blurInFadeIn" ||
+                    this.state.introFX === "blurInFadeInBounceIn"
+                  }
+                  blurIn={
+                    this.state.introFX === "blurIn" ||
+                    this.state.introFX === "blurInFadeIn" ||
+                    this.state.introFX === "blurInFadeInBounceIn"
+                  }
+                  easingFunction={
+                    (this.state.introFX === "bounceIn" &&
+                      "cubic-bezier(0.68, -0.55, 0.265, 1.95)") ||
+                    (this.state.introFX === "blurInFadeInBounceIn" &&
+                      "cubic-bezier(0.68, -0.55, 0.265, 1.95)")
+                  }
                   key={index}
                   translate={this.state.value}
                   delay={index}
@@ -159,6 +268,22 @@ class Testing extends React.Component {
     );
   }
 }
+
+const fadeIn = () => keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
+const Text = styled.h2`
+  font-family: "Permanent Marker", cursive;
+  color: "black";
+  text-align: center;
+`;
 
 const SideBar = styled.div`
   height: 600px;
@@ -198,28 +323,15 @@ const BottomBar = styled.div`
   font-family: "Permanent Marker", cursive;
 `;
 
-const fadeIn = () => keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`;
-
-const AnimatedItemsContainer = styled.div`
-  margin-top: 30px;
-`;
+const AnimatedItemsContainer = styled.div``;
 
 const UserContainer = styled.div`
-  padding-top: 75px;
   font-family: "Permanent Marker", cursive;
-  background: #F0DB4F;
+  background: #f0db4f;
   text-align: center;
   height: -webkit-fill-available;
   width: 100%;
-  display: flex
+  display: flex;
   transition: 1s;
   justify-content: space-around;
 `;
