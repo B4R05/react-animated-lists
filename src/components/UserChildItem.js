@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 class UserChildItem extends PureComponent {
   handleClick = () => {
-    alert("you clicked!");
+    alert("You clicked a list item!");
   };
 
   render() {
