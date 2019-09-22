@@ -1,12 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import Testing from "./components/Testing";
-import * as serviceWorker from "./serviceWorker";
+import AnimatedItem from "./styles";
 
-ReactDOM.render(<Testing />, document.getElementById("root"));
+const ReactAnimatedList = props => {
+  return (
+    <AnimatedItem
+      {...props}
+      translate={props.translate}
+      delay={props.delay}
+      duration={props.duration}
+    >
+      {props.children}
+    </AnimatedItem>
+  );
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+export default ReactAnimatedList;
