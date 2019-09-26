@@ -2,6 +2,8 @@
 
 https://react-animated-lists.firebaseapp.com
 
+Will sort out this readme mess soon :)
+
 //npm i react-animated-lists AND you need to install styled-components!!
 //NEED a duration prop AND direction minimum for all child items to move in specified direction
 //no duration = no smooth transition
